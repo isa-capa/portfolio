@@ -21,7 +21,7 @@ body{
 }
 
 .container{max-width:1100px; margin:0 auto; padding: 0 18px;}
-.section{padding: 62px 0;}
+.section{padding: 36px 0;} /* Reducido de 62px a 36px para recortar el espacio blanco masivo */
 .section__head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:18px;}
 .section__head h2{margin:0; font-size: 28px;}
 .section__head p{margin:0; color:var(--muted);}
@@ -671,4 +671,169 @@ body{
   position: absolute;
   left: 0;
   color: rgba(56,189,248,.8);
+}
+
+/* ---------- AI Story Case Study ---------- */
+.aiCard {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 32px;
+  align-items: center;
+  padding: 24px;
+}
+
+.aiCard__media {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--stroke);
+  aspect-ratio: 4/3;
+  background: var(--bg);
+}
+
+.aiCard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.aiCard:hover .aiCard__media img {
+  transform: scale(1.03); /* Efecto cinemático sutil */
+}
+
+.aiCard__media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17,24,39,0.3) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.aiCard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aiCard__title { 
+  margin: 0; 
+  font-size: 32px; 
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--a1), var(--a2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.aiCard__desc { 
+  color: var(--muted); 
+  font-size: 16px; 
+  line-height: 1.6; 
+  margin: 0;
+}
+
+.aiCard__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* ---------- Minimal Modal System ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal__card {
+  width: 100%;
+  max-width: 900px; /* Tamaño ideal para Slides */
+  background: var(--bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--stroke);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal.is-active .modal__card {
+  transform: translateY(0) scale(1);
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--stroke);
+  background: var(--card);
+}
+
+.modal__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.15s ease;
+  padding: 0;
+}
+
+.modal__close:hover { color: var(--text); }
+
+.modal__body {
+  position: relative;
+  width: 100%;
+  /* 16:9 Aspect Ratio para la presentación */
+  padding-bottom: 56.25%; 
+  background: #f7f7f7;
+}
+
+.modal__body iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Responsividad */
+@media (max-width: 860px) {
+  .aiCard {
+    grid-template-columns: 1fr; /* Apilamos en mobile */
+    gap: 20px;
+    padding: 18px;
+  }
+  .aiCard__media {
+    aspect-ratio: auto;
+    height: 240px;
+  }
+  .aiCard__title { font-size: 28px; }
 }

@@ -103,3 +103,46 @@ document.querySelectorAll(".flip").forEach((card) => {
     card.classList.toggle("is-flipped");
   });
 });
+
+// ---------- Case Study Modal Logic ----------
+const caseModal = document.getElementById('caseStudyModal');
+const openCaseModalBtn = document.getElementById('openCaseStudyBtn');
+const closeCaseModalBtn = document.getElementById('closeCaseStudyBtn');
+const modalIframeWrap = document.getElementById('modalIframeWrap');
+
+if (caseModal && openCaseModalBtn && closeCaseModalBtn && modalIframeWrap) {
+  
+  // Función para abrir
+  openCaseModalBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    caseModal.classList.add('is-active');
+    caseModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Evitar scroll del fondo
+    
+    // Lazy Load: Inyectamos el Iframe de Drive solo si no existe
+    if(!modalIframeWrap.querySelector('iframe')){
+      modalIframeWrap.innerHTML += `<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRK9D43K2twIZA7TpOHtzaDsxU7x3d7zeL4IOu--WGhJvAeXadQpUSWprrR7zEHYNBQW7N6wQ-dWEG6/pubembed?start=true&loop=true&delayms=3000" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>`;
+    }
+  });
+
+  // Función para cerrar
+  const closeCaseModal = () => {
+    caseModal.classList.remove('is-active');
+    caseModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = ''; // Restaurar scroll
+  };
+
+  closeCaseModalBtn.addEventListener('click', closeCaseModal);
+  
+  // Cerrar al hacer click fuera del contenido (en el overlay oscuro)
+  caseModal.addEventListener('click', (e) => {
+    if (e.target === caseModal) closeCaseModal();
+  });
+  
+  // Accesibilidad: Cerrar con tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && caseModal.classList.contains('is-active')) {
+      closeCaseModal();
+    }
+  });
+}
